@@ -1,0 +1,11 @@
+{
+  "skill_name": "woosmap-google-maps-migration",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "TODO",
+      "should_trigger": true,
+      "expectations": ["TODO"]
+    }
+  ]
+}
