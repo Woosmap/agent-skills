@@ -3,9 +3,107 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "TODO",
+      "prompt": "Port this to Woosmap:\n\n```js\nconst map = new google.maps.Map(document.getElementById('map'), { center: { lat: 48.85, lng: 2.35 }, zoom: 12 });\nstores.forEach((s) => {\n  const marker = new google.maps.Marker({ position: s.position, map, icon: 'pin.png' });\n  marker.addListener('click', () => console.log(marker.getPosition().lat(), marker.getPosition().lng()));\n});\n```",
       "should_trigger": true,
-      "expectations": ["TODO"]
+      "expectations": [
+        "Replaces google.maps.* with woosmap.map.*",
+        "Uses the script tag URL and key parameter shown in the migration guide's 'Script Tag & Map Init' section",
+        "Keeps getPosition().lat() and .lng() as method calls with parentheses",
+        "Keeps woosmap.map.Marker with the image icon"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We're moving our store map from Google Maps to Woosmap. This helper is used everywhere:\n\n```js\nfunction toBounds([minLat, minLng, maxLat, maxLng]) {\n  return new google.maps.LatLngBounds({ lat: minLat, lng: minLng }, { lat: maxLat, lng: maxLng });\n}\nmap.fitBounds(toBounds(region.bbox));\n```\n\nWhat do I need to change?",
+      "should_trigger": true,
+      "expectations": [
+        "States that woosmap.map.LatLngBounds takes (northEast, southWest), the reverse of Google's (sw, ne)",
+        "Swaps the two arguments inside the helper, not only the namespace",
+        "Explains that renaming the namespace alone would fit the map to the wrong area",
+        "Leaves the fitBounds call site unchanged"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Migrate this Google Maps directions code to Woosmap:\n\n```js\ntry {\n  const res = await directionsService.route({ origin, destination, travelMode: google.maps.TravelMode.DRIVING });\n  renderer.setDirections(res);\n} catch (e) {\n  if (e.code === 'ZERO_RESULTS') showNoRoute();\n}\n```",
+      "should_trigger": true,
+      "expectations": [
+        "States that woosmap.map.DirectionsService.route(request, callback) uses a callback (result, status) and returns no Promise",
+        "Rewrites the call with a callback, or wraps it in a Promise that resolves only when status is 'OK'",
+        "Treats any status other than 'OK' as a failure instead of relying on Google's ZERO_RESULTS",
+        "Uses woosmap.map.TravelMode.DRIVING and woosmap.map.DirectionsRenderer"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I'm switching from Google Maps to Woosmap. I draw 2000 delivery zones like this and it is extremely sluggish in Woosmap:\n\n```js\nconst polys = zones.map((z) => new woosmap.map.Polygon({ paths: z.paths, map, fillColor: z.color }));\nfunction hideZones() { polys.forEach((p) => p.setMap(null)); }\nconst added = map.data.addGeoJson(extraZones);\nadded.forEach((f) => f.setProperty('extra', true));\n```\n\nHow do I fix it?",
+      "should_trigger": true,
+      "expectations": [
+        "Replaces the per-feature Polygon objects with one woosmap.map.Data layer loaded in bulk with addGeoJson",
+        "Styles the features with setStyle using a function instead of per-object options",
+        "Hides the layer with a single data.setMap(null) instead of a loop",
+        "Notes that Woosmap's addGeoJson returns nothing and uses forEach to reach the added features"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "What's the Woosmap equivalent of this Google Places Autocomplete code?\n\n```js\nconst svc = new google.maps.places.AutocompleteService();\nsvc.getPlacePredictions({ input: query }, (predictions, status) => {\n  if (status === 'OK') render(predictions.map((p) => ({ id: p.place_id, label: p.description })));\n});\n```",
+      "should_trigger": true,
+      "expectations": [
+        "Uses the Localities API (woosmap.map.LocalitiesService) and links the Localities migration guide",
+        "States that LocalitiesService returns a Promise, the reverse of Google's callback",
+        "Replaces place_id with public_id",
+        "Does not invent a parameter mapping table; follows the Localities migration guide"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Our order confirmation emails embed this Google Static Maps image. Convert it to Woosmap:\n\nhttps://maps.googleapis.com/maps/api/staticmap?center=48.85,2.35&zoom=13&size=600x300&scale=2&format=png&markers=color:red|48.85,2.35&path=color:0x0000ff|weight:4|48.85,2.35|48.86,2.36&key=KEY",
+      "should_trigger": true,
+      "expectations": [
+        "Maps center to lat and lng, size to width and height, and scale=2 to retina=yes",
+        "Drops the format parameter and says the image is WebP only",
+        "Warns that some email clients do not display WebP",
+        "Writes markers and polylines as JSON values (polylines with an encoded polyline in enc), not Google's pipe syntax"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I'm rebuilding the search results page of our holiday rentals site and we're dropping Google Maps for Woosmap. The layout is a listing grid on the left and a map on the right. Each listing shows on the map as a little white pill with the nightly price (\"€128\"), and the pill turns dark when you hover the matching card. Clicking a pill opens a preview card, and in that card there's a 'Street view' tab so guests can see what the street looks like.\n\nRight now the pins look like this:\n\n```js\nconst tag = document.createElement('div');\ntag.className = 'price-pill';\ntag.textContent = `€${listing.price}`;\nnew google.maps.marker.AdvancedMarkerElement({ map, position: listing.location, content: tag });\n```\n\nand the street tab uses `new google.maps.StreetViewPanorama(el, { position: listing.location })`.\n\nHow do I build both of these with Woosmap?",
+      "should_trigger": true,
+      "expectations": [
+        "Checks the migration guide's 'What Woosmap doesn't cover' section",
+        "Says up front that Street View is not available in Woosmap and suggests a separate solution instead of a shim",
+        "States that AdvancedMarkerElement does not exist in Woosmap",
+        "Recommends extending woosmap.map.OverlayView for the HTML price tags and points to the marker-html-css sample"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Our Node backend calls https://maps.googleapis.com/maps/api/distancematrix/json for delivery ETAs. We're moving to Woosmap. What's the equivalent call?",
+      "should_trigger": true,
+      "expectations": [
+        "Points to the Distance API migration guide",
+        "Uses https://api.woosmap.com/distance/distancematrix/json",
+        "Uses a private key (private_key) for the server-side call, not the public key",
+        "Takes parameter names from the Distance API reference instead of copying Google's"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Build a store locator page with Woosmap: a map, a search box with address autocomplete, and a list of the 5 nearest stores.",
+      "should_trigger": false,
+      "expectations": [
+        "Does not load the woosmap-google-maps-migration skill (no Google Maps code to migrate)"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Our Woosmap Localities autocomplete sometimes returns HTTP 429. How should we handle it?",
+      "should_trigger": false,
+      "expectations": [
+        "Does not load the woosmap-google-maps-migration skill (existing Woosmap code, no migration)"
+      ]
     }
   ]
 }
