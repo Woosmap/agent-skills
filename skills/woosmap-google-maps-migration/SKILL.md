@@ -44,12 +44,13 @@ These are the points agents get wrong most often. Details are in `references/`.
   a callback (or wrap it in your own Promise). Other services return Promises;
   check each one in the reference.
 - **Static Map is WebP only:** Woosmap has no `format` parameter, so drop it and
-  make sure anything that consumes the image accepts WebP.
+  make sure anything that consumes the image accepts WebP. Overlay parameters
+  (`markers`, `polylines`, `polygons`, `stylers`) take JSON, not Google's pipe
+  syntax.
 - **Data layer performance:** don't create one `woosmap.map.Polygon` per feature.
   Load features in bulk with `addGeoJson` on a `woosmap.map.Data` instance, and
   clear a layer with `data.setMap(null)` instead of removing features in a loop.
   Use a separate `Data` instance for each layer you toggle independently.
-  See [forum thread 174](https://forum.woosmap.com/t/174).
 
 ## Step 3: REST and web services (links only)
 
