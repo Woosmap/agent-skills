@@ -5,10 +5,8 @@ description: Migrate Google Maps Platform code to Woosmap. Use whenever the user
 
 # Woosmap Google Maps Migration
 
-This skill is intentionally thin. The Woosmap docs are the source of truth, and
-this file only points you to them and covers the few pitfalls the docs don't
-make obvious. Read the docs before you write code: parameter names and
-defaults change, and whatever you remember may be out of date.
+Check the Woosmap docs before writing code, not your memory of the API. Where a
+migration guide and the API reference disagree, follow the reference.
 
 ## Step 0: load the rules and the docs index
 
@@ -25,24 +23,20 @@ defaults change, and whatever you remember may be out of date.
 Before mapping any Google feature, read
 [What Woosmap doesn't cover](https://developers.woosmap.com/products/map-api/guides/migration/#what-woosmap-doesnt-cover).
 If the code uses one of those features, tell the user up front and suggest the
-alternative that section lists. Don't make up a shim. This skill deliberately
-doesn't copy that list, so it can't drift from the docs.
+alternative that section lists. Don't make up a shim.
 
 ## Step 2: Key differences
-
-These are the points agents get wrong most often. Details are in `references/`.
 
 - **Namespace:** `google.maps.*` → `woosmap.map.*`. Also swap the script tag and
   key. See the migration guide's "Script Tag & Map Init" section.
 - **`LatLngBounds(ne, sw)`:** Woosmap takes **north-east first**. Google takes
   `(sw, ne)`. Swap the arguments; don't just rename the class.
-- **`lat()` / `lng()` stay methods:** the reference defines them as
-  `() => number`, so keep the parentheses. The Map API and Localities migration
-  guides currently say the opposite; follow the reference.
+- **`lat()` / `lng()` stay methods:** keep the parentheses; the reference defines
+  them as `() => number`.
 - **`DirectionsService.route(request, callback)`:** this is a callback
   `(result, status)`, not a Promise. Rewrite `await`/`.then()` Google code into
-  a callback (or wrap it in your own Promise). Other services return Promises;
-  check each one in the reference.
+  a callback (or wrap it in your own Promise). `DistanceService`,
+  `LocalitiesService`, `StoresService` and `DatasetsService` return Promises.
 - **Static Map is WebP only:** Woosmap has no `format` parameter, so drop it and
   make sure anything that consumes the image accepts WebP. Overlay parameters
   (`markers`, `polylines`, `polygons`, `stylers`) take JSON, not Google's pipe
@@ -52,13 +46,17 @@ These are the points agents get wrong most often. Details are in `references/`.
   clear a layer with `data.setMap(null)` instead of removing features in a loop.
   Use a separate `Data` instance for each layer you toggle independently.
 
-## Step 3: REST and web services (links only)
+## Step 3: REST, web services and mobile SDKs (links only)
 
 Don't build your own parameter mapping tables. Follow the guides:
 
-- Overall: [Migration from Google Maps](https://developers.woosmap.com/products/migration-guides/migration-from-google-maps/)
-- Places Autocomplete / Geocoding / Place Details → [Localities migration](https://developers.woosmap.com/products/localities/guides/migration/)
-- Distance Matrix / Directions (REST) → [Distance API migration](https://developers.woosmap.com/products/distance-api/guides/migration/)
+- Overall: [Migration from Google Maps](https://developers.woosmap.com/products/migration-guides/migration-from-google-maps.md)
+- Places Autocomplete / Geocoding / Place Details → [Localities migration](https://developers.woosmap.com/products/localities/guides/migration.md)
+- Distance Matrix / Directions (REST) → [Distance API migration](https://developers.woosmap.com/products/distance-api/guides/migration.md)
+- Android / iOS / Flutter / React Native → the "Mobile SDKs" table in
+  [Migration from Google Maps](https://developers.woosmap.com/products/migration-guides/migration-from-google-maps.md).
+  Step 2 is for the Map JS API only. Mobile SDKs, including React Native, have a
+  different API (for example `<WoosmapView>` components, not `woosmap.map.*`).
 
 ## Step 4: finish
 
