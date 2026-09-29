@@ -8,7 +8,10 @@ description: Migrate Google Maps Platform code to Woosmap. Use whenever the user
 Check the Woosmap docs before writing code, not your memory of the API. Where a
 migration guide and the API reference disagree, follow the reference.
 
-## Step 0: load the rules and the docs index
+## Step 0: load the rules and the docs index (once per conversation)
+
+Skip items 1–2 if you already fetched them earlier in this conversation. Still
+open the reference for any class, method or event you have not checked yet.
 
 1. Fetch `https://developers.woosmap.com/llms-rules.txt` and follow it.
 2. Use `https://developers.woosmap.com/llms.txt` to find the pages you need.
@@ -23,7 +26,8 @@ migration guide and the API reference disagree, follow the reference.
 Before mapping any Google feature, read
 [What Woosmap doesn't cover](https://developers.woosmap.com/products/map-api/guides/migration/#what-woosmap-doesnt-cover).
 If the code uses one of those features, tell the user up front and suggest the
-alternative that section lists. Don't make up a shim.
+alternative that section lists. Don't make up a shim. Do this once per
+conversation, unless the user brings in a new Google feature.
 
 ## Step 2: Key differences
 
@@ -40,7 +44,8 @@ alternative that section lists. Don't make up a shim.
 - **Static Map is WebP only:** Woosmap has no `format` parameter, so drop it and
   make sure anything that consumes the image accepts WebP. Overlay parameters
   (`markers`, `polylines`, `polygons`, `stylers`) take JSON, not Google's pipe
-  syntax.
+  syntax. Send one JSON object per `markers`, `polylines` or `polygons` value
+  and repeat the parameter for more; a JSON array returns HTTP 422.
 - **Data layer performance:** don't create one `woosmap.map.Polygon` per feature.
   Load features in bulk with `addGeoJson` on a `woosmap.map.Data` instance, and
   clear a layer with `data.setMap(null)` instead of removing features in a loop.

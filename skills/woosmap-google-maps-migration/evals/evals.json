@@ -64,7 +64,8 @@
         "Maps center to lat and lng, size to width and height, and scale=2 to retina=yes",
         "Drops the format parameter and says the image is WebP only",
         "Warns that some email clients do not display WebP",
-        "Writes markers and polylines as JSON values (polylines with an encoded polyline in enc), not Google's pipe syntax"
+        "Writes markers and polylines as JSON values (polylines with an encoded polyline in enc), not Google's pipe syntax",
+        "Sends each marker or polyline as one JSON object and repeats the parameter for more, not a JSON array in one value"
       ]
     },
     {
