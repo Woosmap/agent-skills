@@ -37,7 +37,7 @@ The skills are thin. They point agents to the live [Woosmap developer docs](http
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+To be discussed.
 
 ## License
 
