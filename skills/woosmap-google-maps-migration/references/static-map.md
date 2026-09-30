@@ -13,3 +13,12 @@
   `markers`, `polylines` and `polygons` as `array`, meaning a repeated query
   parameter: `markers={...}&markers={...}`. A JSON array in one value
   (`markers=[{...}]`) returns HTTP 422. URL-encode each value.
+
+```js
+// Two markers and a polyline: repeat the parameter, one JSON object each
+const url = new URL("https://api.woosmap.com/maps/static");
+url.search = new URLSearchParams({ lat: 48.85, lng: 2.35, zoom: 13, width: 600, height: 300, key: WOOSMAP_KEY });
+url.searchParams.append("markers", JSON.stringify({ lat: 48.85, lng: 2.35, url: "https://example.com/pin.png" }));
+url.searchParams.append("markers", JSON.stringify({ lat: 48.86, lng: 2.36, url: "https://example.com/pin.png" }));
+url.searchParams.append("polylines", JSON.stringify({ enc: encodedPath, color: "blue", weight: 4 }));
+```

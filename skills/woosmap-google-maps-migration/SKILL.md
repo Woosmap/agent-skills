@@ -8,6 +8,10 @@ description: Migrate Google Maps Platform code to Woosmap. Use whenever the user
 Check the Woosmap docs before writing code, not your memory of the API. Where a
 migration guide and the API reference disagree, follow the reference.
 
+End every answer with a short "What changed" list, even when you only return a
+snippet: one line per Woosmap difference you applied, plus any unsupported
+feature from Step 1 that still needs a decision.
+
 ## Step 0: load the rules and the docs index (once per conversation)
 
 Skip items 1–2 if you already fetched them earlier in this conversation. Still
@@ -67,8 +71,7 @@ Don't build your own parameter mapping tables. Follow the guides:
 
 - Run or build the migrated code if the project allows it, and check the
   browser console.
-- Give the user a short list of what changed, and flag any unsupported feature
-  from Step 1 that still needs a decision.
+- End with the "What changed" list described at the top.
 
 ## Reference files (load only when the task needs that topic)
 

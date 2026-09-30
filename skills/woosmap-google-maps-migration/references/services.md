@@ -8,7 +8,8 @@ Signature: `route(request, callback)`, where the callback is `(result, status) =
 ```js
 // Google (Promise)
 const res = await directionsService.route(req);
-// Woosmap (callback)
+// Woosmap (callback); draw the result with DirectionsRenderer
+const renderer = new woosmap.map.DirectionsRenderer({ map });
 directionsService.route(req, (result, status) => {
   if (status !== "OK") { /* handle */ return; }
   renderer.setDirections(result);
@@ -25,6 +26,8 @@ const routeAsync = (req) =>
 ```
 
 `DirectionStatus` only documents `OK` (`woosmap.map.DirectionStatus.OK`); treat any other status as a failure.
+Don't match on Google's `ZERO_RESULTS`: Woosmap failures arrive as other status strings
+(for example `MAX_ROUTE_LENGTH_EXCEEDED`).
 
 ## Other services
 

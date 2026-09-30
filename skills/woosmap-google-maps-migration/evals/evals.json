@@ -9,7 +9,8 @@
         "Replaces google.maps.* with woosmap.map.*",
         "Uses the script tag URL and key parameter shown in the migration guide's 'Script Tag & Map Init' section",
         "Keeps getPosition().lat() and .lng() as method calls with parentheses",
-        "Keeps woosmap.map.Marker with the image icon"
+        "Keeps woosmap.map.Marker with the image icon",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -20,7 +21,8 @@
         "States that woosmap.map.LatLngBounds takes (northEast, southWest), the reverse of Google's (sw, ne)",
         "Swaps the two arguments inside the helper, not only the namespace",
         "Explains that renaming the namespace alone would fit the map to the wrong area",
-        "Leaves the fitBounds call site unchanged"
+        "Leaves the fitBounds call site unchanged",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -31,7 +33,8 @@
         "States that woosmap.map.DirectionsService.route(request, callback) uses a callback (result, status) and returns no Promise",
         "Rewrites the call with a callback, or wraps it in a Promise that resolves only when status is 'OK'",
         "Treats any status other than 'OK' as a failure instead of relying on Google's ZERO_RESULTS",
-        "Uses woosmap.map.TravelMode.DRIVING and woosmap.map.DirectionsRenderer"
+        "Uses woosmap.map.TravelMode.DRIVING and woosmap.map.DirectionsRenderer",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -42,7 +45,8 @@
         "Replaces the per-feature Polygon objects with one woosmap.map.Data layer loaded in bulk with addGeoJson",
         "Styles the features with setStyle using a function instead of per-object options",
         "Hides the layer with a single data.setMap(null) instead of a loop",
-        "Notes that Woosmap's addGeoJson returns nothing and uses forEach to reach the added features"
+        "Notes that Woosmap's addGeoJson returns nothing and uses forEach to reach the added features",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -53,7 +57,8 @@
         "Uses the Localities API (woosmap.map.LocalitiesService) and links the Localities migration guide",
         "States that LocalitiesService returns a Promise, the reverse of Google's callback",
         "Replaces place_id with public_id",
-        "Does not invent a parameter mapping table; follows the Localities migration guide"
+        "Does not invent a parameter mapping table; follows the Localities migration guide",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -65,7 +70,8 @@
         "Drops the format parameter and says the image is WebP only",
         "Warns that some email clients do not display WebP",
         "Writes markers and polylines as JSON values (polylines with an encoded polyline in enc), not Google's pipe syntax",
-        "Sends each marker or polyline as one JSON object and repeats the parameter for more, not a JSON array in one value"
+        "Sends each marker or polyline as one JSON object and repeats the parameter for more, not a JSON array in one value",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -76,7 +82,8 @@
         "Checks the migration guide's 'What Woosmap doesn't cover' section",
         "Says up front that Street View is not available in Woosmap and suggests a separate solution instead of a shim",
         "States that AdvancedMarkerElement does not exist in Woosmap",
-        "Recommends extending woosmap.map.OverlayView for the HTML price tags and points to the marker-html-css sample"
+        "Recommends extending woosmap.map.OverlayView for the HTML price tags and points to the marker-html-css sample",
+        "Ends with a short list of what changed"
       ]
     },
     {
@@ -87,7 +94,8 @@
         "Points to the Distance API migration guide",
         "Uses https://api.woosmap.com/distance/distancematrix/json",
         "Uses a private key (private_key) for the server-side call, not the public key",
-        "Takes parameter names from the Distance API reference instead of copying Google's"
+        "Takes parameter names from the Distance API reference instead of copying Google's",
+        "Ends with a short list of what changed"
       ]
     },
     {
