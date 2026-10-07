@@ -4,26 +4,10 @@
 
 Reference: `#woosmap.map.DirectionsService__route`
 Signature: `route(request, callback)`, where the callback is `(result, status) => void`.
-
-```js
-// Google (Promise)
-const res = await directionsService.route(req);
-// Woosmap (callback); draw the result with DirectionsRenderer
-const renderer = new woosmap.map.DirectionsRenderer({ map });
-directionsService.route(req, (result, status) => {
-  if (status !== "OK") { /* handle */ return; }
-  renderer.setDirections(result);
-});
-```
-
-If the calling code needs `await`, wrap the call in a Promise:
-
-```js
-const routeAsync = (req) =>
-  new Promise((resolve, reject) =>
-    directionsService.route(req, (result, status) =>
-      status === "OK" ? resolve(result) : reject(new Error(status))));
-```
+It has no Promise form. Take the callback example and the Promise wrapper for `await` code
+from the "JS SDK" section of the
+[Distance API migration](https://developers.woosmap.com/products/distance-api/guides/migration.md).
+Draw the result with `DirectionsRenderer.setDirections(result)`.
 
 `DirectionStatus` only documents `OK` (`woosmap.map.DirectionStatus.OK`); treat any other status as a failure.
 Don't match on Google's `ZERO_RESULTS`: Woosmap failures arrive as other status strings
