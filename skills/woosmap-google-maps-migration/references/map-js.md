@@ -1,7 +1,7 @@
 # Map init, markers, bounds, LatLng, Data layer
 
 Source of truth: https://developers.woosmap.com/products/map-api/guides/migration.md
-and https://developers.woosmap.com/products/map-api/reference/1.4/
+and https://developers.woosmap.com/products/map-api/reference/1.4.md
 Take the script tag, key and map init from the guide's "Script Tag & Map Init"
 section. Don't write them from memory.
 

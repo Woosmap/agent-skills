@@ -21,14 +21,14 @@ open the reference for any class, method or event you have not checked yet.
 2. Use `https://developers.woosmap.com/llms.txt` to find the pages you need.
    Every docs page has a Markdown twin: add `.md` to its URL. Prefer the twin.
    It is smaller and easier to parse than the HTML page.
-3. For Map JS API signatures, use the reference:
-   `https://developers.woosmap.com/products/map-api/reference/1.4/`
-   (anchors look like `#woosmap.map.LatLngBounds`).
+3. For Map JS API signatures, use the Markdown reference:
+   `https://developers.woosmap.com/products/map-api/reference/1.4.md`
+   (search it for the class name, for example `woosmap.map.LatLngBounds`).
 
 ## Step 1: check what Woosmap doesn't cover
 
-Before mapping any Google feature, read
-[What Woosmap doesn't cover](https://developers.woosmap.com/products/map-api/guides/migration/#what-woosmap-doesnt-cover).
+Before mapping any Google feature, read the "What Woosmap Doesn't Cover" section of
+https://developers.woosmap.com/products/map-api/guides/migration.md.
 If the code uses one of those features, tell the user up front and suggest the
 alternative that section lists. Don't make up a shim. Do this once per
 conversation, unless the user brings in a new Google feature.
