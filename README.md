@@ -31,9 +31,16 @@ Update installed skills with `npx skills update`.
 | --- | --- |
 | [`woosmap-google-maps-migration`](skills/woosmap-google-maps-migration/SKILL.md) | Migrating code from the Google Maps JavaScript API or Google Maps web services to Woosmap |
 
+## Not migrating? Point your agent at the docs
+
+For new Woosmap projects or existing Woosmap code, no skill is needed. Add this to your `CLAUDE.md`, `AGENTS.md` or Cursor rules:
+
+> Before writing Woosmap code, fetch https://developers.woosmap.com/llms-rules.txt and follow it.
+> Find pages in https://developers.woosmap.com/llms.txt and read the `.md` version of each page.
+
 ## How the skills stay current
 
-The skills are thin. They point agents to the live [Woosmap developer docs](https://developers.woosmap.com) (`llms.txt`, `llms-rules.txt` and the `.md` version of each page) and do not copy them. Only guidance that the docs do not cover is written into a skill.
+The skills are thin. They point agents to the live [Woosmap developer docs](https://developers.woosmap.com) and do not copy them. Only guidance that the docs do not cover is written into a skill.
 
 ## Contributing
 
