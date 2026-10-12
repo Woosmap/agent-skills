@@ -30,10 +30,11 @@ Update installed skills with `npx skills update`.
 | Skill | Use it when |
 | --- | --- |
 | [`woosmap-google-maps-migration`](skills/woosmap-google-maps-migration/SKILL.md) | Migrating code from the Google Maps JavaScript API or Google Maps web services to Woosmap |
+| [`woosmap-store-locator`](skills/woosmap-store-locator/SKILL.md) | Importing your stores into Woosmap and building a page that shows them and finds the nearest ones |
 
-## Not migrating? Point your agent at the docs
+## Everything else: point your agent at the docs
 
-For new Woosmap projects or existing Woosmap code, no skill is needed. Add this to your `CLAUDE.md`, `AGENTS.md` or Cursor rules:
+For other Woosmap work, such as address autocomplete, distances or routing, no skill is needed. Add this to your `CLAUDE.md`, `AGENTS.md` or Cursor rules:
 
 > Before writing Woosmap code, fetch https://developers.woosmap.com/llms-rules.txt and follow it.
 > Find pages in https://developers.woosmap.com/llms.txt and read the `.md` version of each page.
