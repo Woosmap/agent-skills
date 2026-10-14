@@ -42,10 +42,6 @@ For new Woosmap projects or existing Woosmap code, no skill is needed. Add this 
 
 The skills are thin. They point agents to the live [Woosmap developer docs](https://developers.woosmap.com) and do not copy them. Only guidance that the docs do not cover is written into a skill.
 
-## Contributing
-
-To be discussed.
-
 ## License
 
 [MIT](LICENSE)
